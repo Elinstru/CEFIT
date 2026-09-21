@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Programas técnicos laborales del CEFIT, Envigado (Antioquia): oferta académica, galería y formulario de contacto con autorización de tratamiento de datos.">
+<title>Técnicos Laborales CEFIT</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{
+  --verde-900:#0d3b33;
+  --verde-700:#14584c;
+  --verde-500:#1f7d69;
+  --ambar:#e2903a;
+  --ambar-soft:#f6e3cb;
+  --papel:#f6f4ef;
+  --papel-2:#ffffff;
+  --tinta:#16211f;
+  --tinta-2:#4b5c58;
+  --linea:#d9ddd6;
+  --foco:#1f7d69;
+  --sombra:0 1px 2px rgba(13,59,51,.06),0 8px 24px rgba(13,59,51,.07);
+  --radio:14px;
+  --ancho:1120px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --verde-900:#d7ece5;
+    --verde-700:#8fd3c0;
+    --verde-500:#63bfa6;
+    --ambar:#f0ab5c;
+    --ambar-soft:#3a2c1c;
+    --papel:#0f1614;
+    --papel-2:#17211e;
+    --tinta:#e8efec;
+    --tinta-2:#a3b5b0;
+    --linea:#2b3a36;
+    --foco:#63bfa6;
+    --sombra:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --verde-900:#d7ece5;
+  --verde-700:#8fd3c0;
+  --verde-500:#63bfa6;
+  --ambar:#f0ab5c;
+  --ambar-soft:#3a2c1c;
+  --papel:#0f1614;
+  --papel-2:#17211e;
+  --tinta:#e8efec;
+  --tinta-2:#a3b5b0;
+  --linea:#2b3a36;
+  --foco:#63bfa6;
+  --sombra:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;background:var(--papel);color:var(--tinta);
+  font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Bricolage Grotesque","Bricolage Grotesque Fallback",Georgia,sans-serif;text-wrap:balance;margin:0;line-height:1.1;letter-spacing:-.015em}
+p{margin:0}
+a{color:var(--verde-500)}
+:focus-visible{outline:3px solid var(--foco);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+.env{width:100%;max-width:var(--ancho);margin:0 auto;padding-inline:20px}
+section{padding-block:clamp(48px,7vw,88px)}
+.eyebrow{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  color:var(--verde-500);margin:0 0 10px
+}
+
+/* ---------- barra superior ---------- */
+.barra{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in srgb,var(--papel) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--linea);
+}
+.barra .env{display:flex;align-items:center;gap:16px;padding-block:12px;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:10px;font-weight:800;font-family:"Bricolage Grotesque",Georgia,sans-serif;font-size:18px;letter-spacing:-.02em;color:var(--verde-900);text-decoration:none}
+.marca-glifo{width:30px;height:30px;flex:none}
+.barra nav{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
+.barra nav a{color:var(--tinta-2);text-decoration:none;font-size:15px;font-weight:600}
+.barra nav a:hover{color:var(--verde-500)}
+.btn-tema{
+  border:1px solid var(--linea);background:var(--papel-2);color:var(--tinta-2);
+  border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer
+}
+
+/* ---------- portada ---------- */
+.portada{
+  border-bottom:1px solid var(--linea);
+  background:
+    radial-gradient(60% 90% at 88% 10%,color-mix(in srgb,var(--ambar) 16%,transparent),transparent 70%),
+    radial-gradient(70% 90% at 5% 90%,color-mix(in srgb,var(--verde-500) 14%,transparent),transparent 65%);
+}
+.portada .env{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,56px);align-items:center}
+.portada h1{font-size:clamp(34px,5.4vw,58px);font-weight:800;color:var(--verde-900)}
+.portada h1 em{font-style:normal;color:var(--ambar)}
+.bajada{margin-top:18px;font-size:clamp(17px,2vw,20px);color:var(--tinta-2);max-width:56ch}
+.acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:13px 24px;
+  font-weight:700;font-size:16px;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;
+  transition:transform .15s ease, box-shadow .15s ease
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-lleno{background:var(--verde-700);color:var(--papel);box-shadow:var(--sombra)}
+:root[data-theme="dark"] .btn-lleno,:root:not([data-theme="light"]) .btn-lleno{color:#0f1614}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .btn-lleno{color:#fff}}
+.btn-borde{border-color:var(--verde-500);color:var(--verde-500);background:transparent}
+
+.datos{display:flex;gap:26px;margin-top:34px;flex-wrap:wrap}
+.dato b{display:block;font-family:"Bricolage Grotesque",Georgia,sans-serif;font-size:30px;font-weight:800;color:var(--verde-700);font-variant-numeric:tabular-nums}
+.dato span{font-size:13px;color:var(--tinta-2);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.sello{width:100%;height:auto;max-width:100%;filter:drop-shadow(0 12px 28px rgba(13,59,51,.14))}
+
+/* ---------- filtros + programas ---------- */
+.titulo-bloque{max-width:62ch;margin-bottom:28px}
+.titulo-bloque h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;color:var(--verde-900)}
+.titulo-bloque p{margin-top:12px;color:var(--tinta-2)}
+
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{
+  border:1px solid var(--linea);background:var(--papel-2);color:var(--tinta-2);
+  border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;
+}
+.chip[aria-pressed="true"]{background:var(--verde-700);border-color:var(--verde-700);color:var(--papel)}
+:root[data-theme="dark"] .chip[aria-pressed="true"]{color:#0f1614}
+
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.programa{
+  background:var(--papel-2);border:1px solid var(--linea);border-radius:var(--radio);
+  padding:22px;display:flex;flex-direction:column;gap:12px
+}
+.programa h3{font-size:20px;font-weight:700;color:var(--verde-900)}
+.escuela{
+  align-self:flex-start;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  color:var(--verde-700);background:color-mix(in srgb,var(--verde-500) 14%,transparent);
+  padding:4px 10px;border-radius:999px
+}
+.programa p{color:var(--tinta-2);font-size:15.5px}
+.ficha{display:flex;gap:16px;flex-wrap:wrap;margin-top:auto;padding-top:14px;border-top:1px dashed var(--linea);font-size:13.5px;color:var(--tinta-2)}
+.ficha b{color:var(--tinta);font-weight:600}
+.vacio{color:var(--tinta-2);padding:24px 0}
+
+/* ---------- galería ---------- */
+.galeria{background:var(--papel-2);border-block:1px solid var(--linea)}
+.pistas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.lamina{
+  position:relative;border:0;padding:0;background:none;cursor:pointer;border-radius:var(--radio);
+  overflow:hidden;aspect-ratio:4/3;max-width:100%;display:block;
+  transition:transform .2s ease
+}
+.lamina:hover{transform:scale(1.015)}
+.lamina svg{display:block;width:100%;height:100%}
+.lamina figcaption{
+  position:absolute;inset:auto 0 0 0;padding:14px;text-align:left;
+  background:linear-gradient(to top,rgba(9,32,28,.88),rgba(9,32,28,0));
+  color:#fff;font-size:14px;font-weight:600;letter-spacing:.01em
+}
+.pistas .lamina:nth-child(1),.pistas .lamina:nth-child(6){grid-column:span 2}
+@media (max-width:640px){.pistas .lamina:nth-child(n){grid-column:auto}}
+
+dialog.visor{
+  border:0;padding:0;background:transparent;max-width:min(92vw,900px);width:100%;
+}
+dialog.visor::backdrop{background:rgba(9,25,22,.78)}
+.visor-caja{background:var(--papel-2);border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra)}
+.visor-caja svg{display:block;width:100%;height:auto}
+.visor-pie{display:flex;align-items:center;gap:12px;padding:14px 18px;flex-wrap:wrap}
+.visor-pie p{font-weight:600}
+.visor-pie .nav{margin-left:auto;display:flex;gap:8px}
+.visor-pie button{
+  border:1px solid var(--linea);background:var(--papel);color:var(--tinta);border-radius:999px;
+  width:40px;height:40px;font:inherit;font-size:16px;cursor:pointer
+}
+
+/* ---------- formulario ---------- */
+.contacto .env{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,56px);align-items:start}
+.form{background:var(--papel-2);border:1px solid var(--linea);border-radius:var(--radio);padding:clamp(20px,3vw,32px);box-shadow:var(--sombra)}
+.campo{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.campo label{font-size:14px;font-weight:700;color:var(--tinta)}
+.campo input,.campo select,.campo textarea{
+  font:inherit;font-size:16px;color:var(--tinta);background:var(--papel);
+  border:1px solid var(--linea);border-radius:10px;padding:12px 14px;width:100%
+}
+.campo textarea{resize:vertical;min-height:90px}
+.campo .pista{font-size:13px;color:var(--tinta-2)}
+.campo .error{font-size:13.5px;color:#c0392b;font-weight:600}
+:root[data-theme="dark"] .campo .error{color:#ff9b8c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .campo .error{color:#ff9b8c}}
+.campo input[aria-invalid="true"],.campo select[aria-invalid="true"]{border-color:#c0392b}
+
+.habeas{
+  border:1px solid var(--linea);background:var(--ambar-soft);
+  border-radius:12px;padding:16px;margin-bottom:18px
+}
+.habeas .fila{display:flex;gap:10px;align-items:flex-start}
+.habeas input[type="checkbox"]{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--verde-700)}
+.habeas label{font-size:14.5px;line-height:1.5}
+.habeas details{margin-top:10px;font-size:14px;color:var(--tinta-2)}
+.habeas summary{cursor:pointer;font-weight:700;color:var(--verde-700)}
+.habeas details p{margin-top:8px}
+
+.aviso{border-radius:10px;padding:14px 16px;font-weight:600;margin-top:16px}
+.aviso.ok{background:color-mix(in srgb,var(--verde-500) 16%,transparent);color:var(--verde-700)}
+.aviso.mal{background:color-mix(in srgb,#c0392b 14%,transparent);color:#c0392b}
+:root[data-theme="dark"] .aviso.mal{color:#ff9b8c}
+
+.lista-contacto{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:12px;color:var(--tinta-2)}
+.lista-contacto b{color:var(--tinta);display:block;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+
+footer{border-top:1px solid var(--linea);padding-block:32px;color:var(--tinta-2);font-size:14px}
+footer .env{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .portada .env,.contacto .env{grid-template-columns:1fr}
+  .sello{max-width:320px;justify-self:center}
+}
+</style>
+</head>
+<body>
+<header class="barra">
+  <div class="env">
+    <a class="marca" href="#inicio">
+      <svg class="marca-glifo" viewBox="0 0 40 40" role="img" aria-label="Escudo CEFIT">
+        <path d="M20 2 36 8v14c0 9-7 14.5-16 16-9-1.5-16-7-16-16V8Z" fill="#14584c"/>
+        <path d="M20 11.5 27.5 27h-5.2L20 21.6 17.7 27h-5.2Z" fill="#e2903a"/>
+      </svg>
+      CEFIT
+    </a>
+    <nav aria-label="Secciones">
+      <a href="#programas">Programas</a>
+      <a href="#galeria">Galería</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <button class="btn-tema" id="btnTema" type="button" aria-pressed="false">Modo oscuro</button>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="portada">
+    <div class="env">
+      <div>
+        <p class="eyebrow">Centro de Formación Integral para el Trabajo · Envigado</p>
+        <h1>Sé <em>técnico laboral</em> en un año y entra al mercado con oficio.</h1>
+        <p class="bajada">Programas presenciales por competencias, con talleres reales, práctica desde el primer semestre y certificación de formación para el trabajo y el desarrollo humano.</p>
+        <div class="acciones">
+          <a class="btn btn-lleno" href="#programas">Ver los programas</a>
+          <a class="btn btn-borde" href="#contacto">Quiero que me contacten</a>
+        </div>
+        <div class="datos">
+          <div class="dato"><b>17</b><span>Programas técnicos</span></div>
+          <div class="dato"><b>5</b><span>Escuelas de formación</span></div>
+          <div class="dato"><b>12</b><span>Meses de formación</span></div>
+        </div>
+      </div>
+      <svg class="sello" viewBox="0 0 320 300" role="img" aria-label="Ilustración de taller: herramientas, portátil y gorro de chef">
+        <rect x="14" y="20" width="292" height="260" rx="20" fill="#14584c"/>
+        <rect x="30" y="36" width="260" height="228" rx="12" fill="#f6f4ef"/>
+        <circle cx="160" cy="120" r="58" fill="#e2903a" opacity=".22"/>
+        <path d="M108 168h104v10H108z" fill="#14584c"/>
+        <path d="M118 112h84v56h-84z" fill="#1f7d69"/>
+        <path d="M126 122h68v36h-68z" fill="#f6f4ef"/>
+        <circle cx="96" cy="92" r="18" fill="#e2903a"/>
+        <path d="M86 92h20v4H86z" fill="#14584c"/>
+        <path d="M212 76c10 0 16 7 16 15 0 6-3 10-8 13v20h-24V104c-5-3-8-7-8-13 0-8 6-15 16-15Z" fill="#e2903a"/>
+        <path d="M60 196h200v8H60z" fill="#d9ddd6"/>
+        <path d="M60 214h140v8H60z" fill="#d9ddd6"/>
+        <path d="M60 232h96v8H60z" fill="#d9ddd6"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="programas">
+    <div class="env">
+      <div class="titulo-bloque">
+        <p class="eyebrow">Oferta académica</p>
+        <h2>Técnicos laborales por competencias</h2>
+        <p>Filtra por escuela para ver los programas, su duración y la jornada en la que se dictan. Todos son presenciales en la sede de Envigado.</p>
+      </div>
+
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar programas por escuela"></div>
+      <div class="rejilla" id="rejilla"></div>
+      <p class="vacio" id="vacio" hidden>No hay programas en esa escuela.</p>
+    </div>
+  </section>
+
+  <section id="galeria" class="galeria">
+    <div class="env">
+      <div class="titulo-bloque">
+        <p class="eyebrow">Nuestros espacios</p>
+        <h2>Galería de talleres y aulas</h2>
+        <p>Toca una lámina para ampliarla. Puedes recorrer la galería con las flechas del teclado y cerrarla con Esc.</p>
+      </div>
+      <div class="pistas" id="pistas"></div>
+    </div>
+  </section>
+
+  <dialog class="visor" id="visor" aria-label="Galería ampliada">
+    <div class="visor-caja">
+      <div id="visorArte"></div>
+      <div class="visor-pie">
+        <p id="visorTexto"></p>
+        <div class="nav">
+          <button type="button" id="visorPrev" aria-label="Imagen anterior">‹</button>
+          <button type="button" id="visorNext" aria-label="Imagen siguiente">›</button>
+          <button type="button" id="visorCerrar" aria-label="Cerrar galería">✕</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <section id="contacto" class="contacto">
+    <div class="env">
+      <div>
+        <p class="eyebrow">Asesoría</p>
+        <h2 style="font-size:clamp(26px,3.4vw,38px);color:var(--verde-900)">Déjanos tus datos y te contactamos</h2>
+        <p style="margin-top:12px;color:var(--tinta-2)">Un asesor te explica requisitos, costos, jornadas y el beneficio de gratuidad Juntos Sumamos para habitantes de Envigado en Sisbén 1, 2, 3 y 4.</p>
+        <ul class="lista-contacto">
+          <li><b>Teléfono</b> (604) 444 45 60, ext. 102</li>
+          <li><b>WhatsApp</b> 315 552 68 66</li>
+          <li><b>Sede</b> Envigado, Antioquia</li>
+          <li><b>Jornadas</b> Mañana, tarde y noche</li>
+        </ul>
+      </div>
+
+      <form class="form" id="formulario" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre completo</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej.: Laura Restrepo Gómez" required>
+          <p class="error" id="err-nombre" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico</label>
+          <input id="correo" name="correo" type="email" autocomplete="email" inputmode="email" placeholder="nombre@correo.com" required>
+          <p class="error" id="err-correo" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="telefono">Teléfono celular</label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="numeric" placeholder="3155526866" required>
+          <p class="pista">10 dígitos, sin espacios ni guiones.</p>
+          <p class="error" id="err-telefono" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="interes">Programa de interés</label>
+          <select id="interes" name="interes"></select>
+        </div>
+
+        <div class="habeas">
+          <div class="fila">
+            <input type="checkbox" id="habeas" name="habeas" required aria-describedby="habeas-texto">
+            <label for="habeas" id="habeas-texto">Autorizo de manera previa, expresa e informada al CEFIT para recolectar, almacenar y usar mis datos personales con el fin de contactarme sobre su oferta de formación, conforme a la <b>Ley 1581 de 2012</b> y el Decreto 1074 de 2015.</label>
+          </div>
+          <details>
+            <summary>Leer la política de tratamiento de datos</summary>
+            <p><b>Responsable:</b> Centro de Formación Integral para el Trabajo — CEFIT, Envigado (Antioquia).</p>
+            <p><b>Finalidad:</b> contacto y asesoría sobre programas técnicos laborales, envío de información de inscripciones y gestión del proceso de admisión. No se comparten los datos con terceros con fines comerciales.</p>
+            <p><b>Tus derechos:</b> conocer, actualizar, rectificar y suprimir tus datos, solicitar prueba de esta autorización y revocarla en cualquier momento, escribiendo a <a href="mailto:protecciondedatos@cefit.edu.co">protecciondedatos@cefit.edu.co</a>.</p>
+            <p>Al no ser datos sensibles, responder es voluntario; sin la autorización no podemos contactarte.</p>
+          </details>
+          <p class="error" id="err-habeas" hidden></p>
+        </div>
+
+        <button class="btn btn-lleno" type="submit" style="width:100%;justify-content:center">Solicitar información</button>
+        <p class="aviso" id="aviso" hidden role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="env">
+    <p>CEFIT · Centro de Formación Integral para el Trabajo — Envigado, Antioquia.</p>
+    <p>Página de referencia con fines académicos. Datos sujetos a verificación en el sitio oficial.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+/* ====== Datos ====== */
+const PROGRAMAS = [
+  { nombre:"Auxiliar Administrativo", escuela:"Administración", jornada:"Mañana", meses:12, desc:"Apoya procesos contables, documentales y de atención al cliente en organizaciones públicas y privadas." },
+  { nombre:"Marketing Digital", escuela:"Administración", jornada:"Mañana", meses:12, desc:"Diseña y mide campañas en redes, comercio electrónico y contenidos para marcas y emprendimientos." },
+  { nombre:"Auxiliar Turístico", escuela:"Administración", jornada:"Tarde", meses:12, desc:"Diseña, oferta y coordina planes turísticos, asesora al viajero y apoya la operación de eventos." },
+  { nombre:"Auxiliar Contable y Financiero", escuela:"Administración", jornada:"Noche", meses:12, desc:"Registra operaciones, concilia cuentas y prepara informes básicos bajo normas contables vigentes." },
+  { nombre:"Gastronomía", escuela:"Gastronomía", jornada:"Mañana", meses:12, desc:"Cocina de línea caliente y fría, costeo de recetas y manipulación de alimentos en cocina profesional." },
+  { nombre:"Panadería y Repostería", escuela:"Gastronomía", jornada:"Noche", meses:12, desc:"Panificación, masas laminadas, postres y montaje de vitrina para negocios propios o de terceros." },
+  { nombre:"Auxiliar de Análisis y Programación de Software", escuela:"Industrias 4.0", jornada:"Tarde", meses:12, desc:"Levanta requerimientos, modela datos y programa soluciones con buenas prácticas de desarrollo." },
+  { nombre:"Auxiliar en Desarrollo Web", escuela:"Industrias 4.0", jornada:"Tarde", meses:12, desc:"Construye sitios y aplicaciones web responsivas y accesibles con HTML, CSS y JavaScript." },
+  { nombre:"Mantenimiento de Computadores y Redes Locales", escuela:"Industrias 4.0", jornada:"Noche", meses:12, desc:"Diagnostica hardware, instala sistemas y configura redes LAN cableadas e inalámbricas." },
+  { nombre:"Diseño Gráfico Digital", escuela:"Industrias 4.0", jornada:"Mañana", meses:12, desc:"Composición, tipografía, identidad visual y piezas digitales para medios impresos y en línea." },
+  { nombre:"Electricidad Residencial e Industrial", escuela:"Mecánica y Eléctrica", jornada:"Noche", meses:12, desc:"Instalaciones eléctricas seguras según RETIE, tableros de control y mantenimiento preventivo." },
+  { nombre:"Mecánica Automotriz", escuela:"Mecánica y Eléctrica", jornada:"Mañana", meses:12, desc:"Diagnóstico y reparación de motores, frenos, suspensión y sistemas eléctricos del vehículo." },
+  { nombre:"Joyería", escuela:"Mecánica y Eléctrica", jornada:"Tarde", meses:12, desc:"Fundición, engaste, soldadura y acabados de piezas en plata y metales preciosos." },
+  { nombre:"Entrenamiento Deportivo", escuela:"Salud y Deporte", jornada:"Noche", meses:12, desc:"Planifica rutinas, evalúa condición física y acompaña procesos de entrenamiento con criterio técnico." },
+  { nombre:"Auxiliar en Seguridad y Salud en el Trabajo", escuela:"Salud y Deporte", jornada:"Noche", meses:12, desc:"Apoya la identificación de peligros, matrices de riesgo e inspecciones del SG-SST." },
+  { nombre:"Auxiliar de Educación para la Primera Infancia", escuela:"Salud y Deporte", jornada:"Mañana", meses:12, desc:"Acompaña el desarrollo de niños de 0 a 6 años con actividades pedagógicas y cuidado responsable." },
+  { nombre:"Auxiliar en Enfermería", escuela:"Salud y Deporte", jornada:"Tarde", meses:12, desc:"Cuidado básico del paciente, signos vitales y apoyo al equipo de salud en instituciones y domicilio." }
+];
+
+const LAMINAS = [
+  { titulo:"Taller de cocina profesional", alt:"Cocina industrial con estufas y campana", paleta:["#14584c","#e2903a","#f6e3cb"], forma:"cocina" },
+  { titulo:"Aula de desarrollo de software", alt:"Escritorios con monitores y código", paleta:["#0d3b33","#63bfa6","#f6f4ef"], forma:"software" },
+  { titulo:"Banco de electricidad", alt:"Tablero eléctrico con interruptores y cableado", paleta:["#1f7d69","#e2903a","#0d3b33"], forma:"electricidad" },
+  { titulo:"Estudio de joyería", alt:"Mesa de joyería con soplete y piezas", paleta:["#3a2c1c","#e2903a","#f6e3cb"], forma:"joyeria" },
+  { titulo:"Gimnasio y valoración física", alt:"Zona de pesas y colchonetas", paleta:["#14584c","#63bfa6","#f6f4ef"], forma:"deporte" },
+  { titulo:"Foso de mecánica automotriz", alt:"Vehículo elevado en el taller", paleta:["#0d3b33","#e2903a","#1f7d69"], forma:"mecanica" }
+];
+
+/* ====== Utilidades ====== */
+const $ = (sel, raiz = document) => raiz.querySelector(sel);
+const crear = (tag, props = {}) => Object.assign(document.createElement(tag), props);
+
+/* ====== Tema ====== */
+(function tema(){
+  const btn = $("#btnTema");
+  const raiz = document.documentElement;
+  let guardado = null;
+  try { guardado = localStorage.getItem("cefit-tema"); } catch (e) { guardado = null; }
+  if (guardado) raiz.setAttribute("data-theme", guardado);
+  const sincronizar = () => {
+    const oscuro = raiz.getAttribute("data-theme") === "dark";
+    btn.textContent = oscuro ? "Modo claro" : "Modo oscuro";
+    btn.setAttribute("aria-pressed", String(oscuro));
+  };
+  sincronizar();
+  btn.addEventListener("click", () => {
+    const oscuro = raiz.getAttribute("data-theme") === "dark";
+    const nuevo = oscuro ? "light" : "dark";
+    raiz.setAttribute("data-theme", nuevo);
+    try { localStorage.setItem("cefit-tema", nuevo); } catch (e) { /* almacenamiento no disponible */ }
+    sincronizar();
+  });
+})();
+
+/* ====== Programas y filtros ====== */
+(function programas(){
+  const rejilla = $("#rejilla");
+  const filtros = $("#filtros");
+  const vacio = $("#vacio");
+  const escuelas = ["Todas", ...new Set(PROGRAMAS.map(p => p.escuela))];
+  let activa = "Todas";
+
+  const tarjeta = (p) => {
+    const art = crear("article", { className:"programa" });
+    art.innerHTML =
+      '<span class="escuela"></span><h3></h3><p></p>' +
+      '<div class="ficha"><span>Jornada: <b class="j"></b></span><span>Duración: <b class="d"></b></span></div>';
+    $(".escuela", art).textContent = p.escuela;
+    $("h3", art).textContent = p.nombre;
+    $("p", art).textContent = p.desc;
+    $(".j", art).textContent = p.jornada;
+    $(".d", art).textContent = p.meses + " meses";
+    return art;
+  };
+
+  const pintar = () => {
+    const lista = activa === "Todas" ? PROGRAMAS : PROGRAMAS.filter(p => p.escuela === activa);
+    rejilla.replaceChildren(...lista.map(tarjeta));
+    vacio.hidden = lista.length > 0;
+  };
+
+  escuelas.forEach((e) => {
+    const chip = crear("button", { className:"chip", type:"button", textContent:e });
+    chip.setAttribute("aria-pressed", String(e === activa));
+    chip.addEventListener("click", () => {
+      activa = e;
+      [...filtros.children].forEach(c => c.setAttribute("aria-pressed", String(c === chip)));
+      pintar();
+    });
+    filtros.append(chip);
+  });
+  pintar();
+
+  const select = $("#interes");
+  select.append(crear("option", { value:"", textContent:"Aún no lo decido" }));
+  PROGRAMAS.forEach(p => select.append(crear("option", { value:p.nombre, textContent:p.nombre })));
+})();
+
+/* ====== Galería dinámica ====== */
+(function galeria(){
+  const pistas = $("#pistas");
+  const visor = $("#visor");
+  const arte = $("#visorArte");
+  const texto = $("#visorTexto");
+  let indice = 0;
+
+  const dibujar = (l) => {
+    const [a, b, c] = l.paleta;
+    const piezas = {
+      cocina:`<rect x="60" y="150" width="280" height="90" fill="${a}"/><rect x="90" y="60" width="220" height="60" rx="8" fill="${c}"/><circle cx="130" cy="180" r="18" fill="${b}"/><circle cx="200" cy="180" r="18" fill="${b}"/><circle cx="270" cy="180" r="18" fill="${b}"/><rect x="80" y="120" width="240" height="12" fill="${b}"/>`,
+      software:`<rect x="70" y="70" width="260" height="140" rx="10" fill="${a}"/><rect x="88" y="88" width="224" height="104" fill="${c}"/><rect x="104" y="106" width="90" height="10" fill="${b}"/><rect x="104" y="126" width="140" height="10" fill="${a}" opacity=".5"/><rect x="104" y="146" width="112" height="10" fill="${b}"/><rect x="150" y="212" width="100" height="14" fill="${a}"/>`,
+      electricidad:`<rect x="100" y="55" width="200" height="180" rx="10" fill="${a}"/><rect x="120" y="75" width="160" height="70" fill="${c}" opacity=".18"/><rect x="132" y="90" width="26" height="42" fill="${b}"/><rect x="172" y="90" width="26" height="42" fill="${b}"/><rect x="212" y="90" width="26" height="42" fill="${b}"/><path d="M200 160l-30 45h26l-10 34 42-52h-26z" fill="${b}"/>`,
+      joyeria:`<rect x="60" y="170" width="280" height="70" fill="${a}"/><circle cx="160" cy="130" r="46" fill="none" stroke="${b}" stroke-width="10"/><path d="M240 96l26 20-10 34h-32l-10-34z" fill="${b}"/><rect x="90" y="150" width="60" height="10" fill="${c}"/>`,
+      deporte:`<rect x="60" y="180" width="280" height="60" fill="${a}"/><rect x="120" y="120" width="160" height="16" rx="8" fill="${b}"/><rect x="96" y="102" width="26" height="52" rx="6" fill="${a}"/><rect x="278" y="102" width="26" height="52" rx="6" fill="${a}"/><circle cx="200" cy="72" r="22" fill="${b}"/>`,
+      mecanica:`<rect x="60" y="200" width="280" height="40" fill="${a}"/><path d="M110 170h180l-22-48H132z" fill="${b}"/><rect x="96" y="170" width="208" height="34" rx="10" fill="${a}"/><circle cx="140" cy="206" r="20" fill="${c}"/><circle cx="260" cy="206" r="20" fill="${c}"/>`
+    };
+    return `<svg viewBox="0 0 400 300" role="img" aria-label="${l.alt}">
+      <rect width="400" height="300" fill="${a}" opacity=".12"/>
+      <rect width="400" height="300" fill="none"/>
+      ${piezas[l.forma]}
+    </svg>`;
+  };
+
+  LAMINAS.forEach((l, i) => {
+    const boton = crear("button", { type:"button", className:"lamina" });
+    boton.innerHTML = dibujar(l) + '<figcaption></figcaption>';
+    $("figcaption", boton).textContent = l.titulo;
+    boton.addEventListener("click", () => abrir(i));
+    pistas.append(boton);
+  });
+
+  const mostrar = () => {
+    const l = LAMINAS[indice];
+    arte.innerHTML = dibujar(l);
+    texto.textContent = l.titulo;
+  };
+  const abrir = (i) => { indice = i; mostrar(); visor.showModal(); };
+  const mover = (paso) => { indice = (indice + paso + LAMINAS.length) % LAMINAS.length; mostrar(); };
+
+  $("#visorPrev").addEventListener("click", () => mover(-1));
+  $("#visorNext").addEventListener("click", () => mover(1));
+  $("#visorCerrar").addEventListener("click", () => visor.close());
+  visor.addEventListener("keydown", (ev) => {
+    if (ev.key === "ArrowRight") { ev.preventDefault(); mover(1); }
+    if (ev.key === "ArrowLeft")  { ev.preventDefault(); mover(-1); }
+  });
+  visor.addEventListener("click", (ev) => { if (ev.target === visor) visor.close(); });
+})();
+
+/* ====== Formulario con validación ====== */
+(function formulario(){
+  const form = $("#formulario");
+  const aviso = $("#aviso");
+
+  const REGLAS = {
+    nombre: {
+      valida: (v) => v.trim().length >= 5 && /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' ]+$/.test(v.trim()),
+      error: "Escribe tu nombre y apellido (solo letras)."
+    },
+    correo: {
+      valida: (v) => /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(v.trim()),
+      error: "Escribe un correo válido, por ejemplo nombre@correo.com."
+    },
+    telefono: {
+      valida: (v) => /^3\d{9}$/.test(v.replace(/\D/g, "")),
+      error: "El celular debe tener 10 dígitos y empezar por 3."
+    }
+  };
+
+  const marcar = (campo, mensaje) => {
+    const entrada = $("#" + campo);
+    const salida = $("#err-" + campo);
+    entrada.setAttribute("aria-invalid", mensaje ? "true" : "false");
+    salida.textContent = mensaje || "";
+    salida.hidden = !mensaje;
+  };
+
+  const revisarCampo = (campo) => {
+    const valor = $("#" + campo).value;
+    const ok = REGLAS[campo].valida(valor);
+    marcar(campo, ok ? "" : REGLAS[campo].error);
+    return ok;
+  };
+
+  Object.keys(REGLAS).forEach((campo) => {
+    $("#" + campo).addEventListener("blur", () => revisarCampo(campo));
+    $("#" + campo).addEventListener("input", () => {
+      if ($("#err-" + campo).hidden === false) revisarCampo(campo);
+    });
+  });
+
+  const revisarHabeas = () => {
+    const ok = $("#habeas").checked;
+    const salida = $("#err-habeas");
+    salida.textContent = ok ? "" : "Debes autorizar el tratamiento de tus datos para poder contactarte.";
+    salida.hidden = ok;
+    $("#habeas").setAttribute("aria-invalid", String(!ok));
+    return ok;
+  };
+  $("#habeas").addEventListener("change", revisarHabeas);
+
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const camposOk = Object.keys(REGLAS).map(revisarCampo).every(Boolean);
+    const habeasOk = revisarHabeas();
+
+    if (!camposOk || !habeasOk) {
+      aviso.className = "aviso mal";
+      aviso.textContent = "Revisa los campos marcados antes de enviar.";
+      aviso.hidden = false;
+      const primero = form.querySelector('[aria-invalid="true"]');
+      if (primero) primero.focus();
+      return;
+    }
+
+    const datos = {
+      nombre: $("#nombre").value.trim(),
+      correo: $("#correo").value.trim().toLowerCase(),
+      telefono: $("#telefono").value.replace(/\D/g, ""),
+      interes: $("#interes").value || "Sin definir",
+      autorizacion: { ley: "1581 de 2012", aceptada: true, fecha: new Date().toISOString() }
+    };
+
+    // Demostración: aquí iría el envío al backend (fetch a la API de admisiones).
+    console.log("Solicitud lista para enviar:", datos);
+
+    aviso.className = "aviso ok";
+    aviso.textContent = "¡Listo, " + datos.nombre.split(" ")[0] + "! Registramos tu solicitud y un asesor te contactará al " + datos.telefono + ".";
+    aviso.hidden = false;
+    form.reset();
+    Object.keys(REGLAS).forEach(c => marcar(c, ""));
+    $("#habeas").setAttribute("aria-invalid", "false");
+  });
+})();
+</script>
+</body>
+</html>
