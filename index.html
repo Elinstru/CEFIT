@@ -369,8 +369,14 @@ footer .env{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
           <p class="error" id="err-habeas" hidden></p>
         </div>
 
+        <!-- Trampa anti-spam: invisible para personas, los bots la rellenan. No borrar. -->
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+          <label for="empresa">No llenar este campo</label>
+          <input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
         <button class="btn btn-lleno" type="submit" style="width:100%;justify-content:center">Solicitar información</button>
-        <p class="aviso" id="aviso" hidden role="status"></p>
+        <p class="aviso" id="aviso" hidden role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -544,8 +550,74 @@ const crear = (tag, props = {}) => Object.assign(document.createElement(tag), pr
   const botonEnviar = form.querySelector('button[type="submit"]');
   const textoBotonOriginal = botonEnviar.textContent;
 
-  // Reemplaza esta URL por la Production URL de tu nodo Webhook en n8n.
-  const WEBHOOK_URL = "https://elvis89.app.n8n.cloud/webhook/contacto-form";
+  /* ------------------------------------------------------------------
+     CONFIGURACIÓN n8n
+     url  : Production URL del nodo Webhook. El workflow debe estar ACTIVO.
+            Formato correcto -> https://<cuenta>.app.n8n.cloud/webhook/<path>
+            (la ruta /assistant/... NO es un webhook, es el editor de n8n)
+     pruebas: pon `true` para usar /webhook-test/ mientras depuras en el editor
+              con el botón "Execute workflow". Déjalo en `false` en producción.
+  ------------------------------------------------------------------ */
+  const N8N = {
+    cuenta:   "nicolasvergara27",
+    ruta:     "contacto-form",
+    pruebas:  false,
+    timeout:  15000,   // ms antes de abortar la petición
+    reintentos: 1      // reintentos solo ante fallo de red
+  };
+
+  const WEBHOOK_URL =
+    "https://" + N8N.cuenta + ".app.n8n.cloud/" +
+    (N8N.pruebas ? "webhook-test" : "webhook") + "/" + N8N.ruta;
+
+  const dormir = (ms) => new Promise(r => setTimeout(r, ms));
+
+  // POST con timeout. Distingue fallo de red (CORS/offline/inactivo) de error HTTP.
+  async function postJSON(url, payload) {
+    const control = new AbortController();
+    const reloj = setTimeout(() => control.abort(), N8N.timeout);
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: control.signal
+      });
+      return resp;
+    } catch (err) {
+      // fetch solo lanza por red/CORS/abort, nunca por un status 4xx o 5xx
+      const fallo = new Error(err.name === "AbortError" ? "timeout" : "red");
+      fallo.tipo = err.name === "AbortError" ? "timeout" : "red";
+      throw fallo;
+    } finally {
+      clearTimeout(reloj);
+    }
+  }
+
+  // Traduce el fallo a un mensaje útil para la persona y otro para la consola.
+  function explicar(estado) {
+    if (estado === "red") return {
+      usuario: "No pudimos conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
+      consola: "Fallo de red o CORS. Causas típicas: (a) el workflow de n8n está INACTIVO, " +
+               "(b) el nodo Webhook no tiene 'Allowed Origins (CORS)' en * o en " +
+               location.origin + ", (c) la URL del webhook está mal escrita."
+    };
+    if (estado === "timeout") return {
+      usuario: "El servidor tardó demasiado en responder. Inténtalo de nuevo en un momento.",
+      consola: "Timeout de " + N8N.timeout + " ms. Suele significar que el nodo Webhook está en " +
+               "modo 'Using Respond to Webhook node' y el flujo nunca llega a ese nodo."
+    };
+    if (estado === 404) return {
+      usuario: "No pudimos enviar tu solicitud. Ya avisamos al equipo técnico.",
+      consola: "404: el webhook no está registrado. Activa el workflow en n8n o revisa que la " +
+               "ruta sea exactamente '" + N8N.ruta + "'."
+    };
+    return {
+      usuario: "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.",
+      consola: "El workflow respondió con un error (" + estado + "). Revisa Executions en n8n."
+    };
+  }
 
   const REGLAS = {
     nombre: {
@@ -608,43 +680,68 @@ const crear = (tag, props = {}) => Object.assign(document.createElement(tag), pr
       return;
     }
 
+    // Trampa anti-spam: si viene llena es un bot. Fingimos éxito y no enviamos nada.
+    if ($("#empresa").value.trim() !== "") {
+      aviso.className = "aviso ok";
+      aviso.textContent = "¡Listo! Registramos tu solicitud.";
+      aviso.hidden = false;
+      form.reset();
+      return;
+    }
+
     const datos = {
       nombre: $("#nombre").value.trim(),
       correo: $("#correo").value.trim().toLowerCase(),
       telefono: $("#telefono").value.replace(/\D/g, ""),
       interes: $("#interes").value || "Sin definir",
-      autorizacion: { ley: "1581 de 2012", aceptada: true, fecha: new Date().toISOString() }
+      autorizacion: { ley: "1581 de 2012", aceptada: true, fecha: new Date().toISOString() },
+      origen: {
+        pagina: location.href,
+        referido: document.referrer || "directo",
+        enviadoEn: new Date().toISOString()
+      }
     };
 
     botonEnviar.disabled = true;
     botonEnviar.textContent = "Enviando...";
     aviso.hidden = true;
 
-    try {
-      const resp = await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos)
-      });
+    let estado = null;
 
-      if (!resp.ok) throw new Error("Respuesta no válida del servidor (" + resp.status + ")");
+    for (let intento = 0; intento <= N8N.reintentos; intento++) {
+      try {
+        const resp = await postJSON(WEBHOOK_URL, datos);
+        if (resp.ok) { estado = "ok"; break; }
+        estado = resp.status;          // 404, 500... no tiene sentido reintentar
+        break;
+      } catch (err) {
+        estado = err.tipo;             // "red" o "timeout": vale la pena reintentar
+        if (intento < N8N.reintentos) await dormir(1200);
+      }
+    }
 
+    if (estado === "ok") {
       aviso.className = "aviso ok";
-      aviso.textContent = "¡Listo, " + datos.nombre.split(" ")[0] + "! Registramos tu solicitud y un asesor te contactará al " + datos.telefono + ".";
+      aviso.textContent = "¡Listo, " + datos.nombre.split(" ")[0] +
+        "! Registramos tu solicitud y un asesor te contactará al " + datos.telefono + ".";
       aviso.hidden = false;
       form.reset();
       Object.keys(REGLAS).forEach(c => marcar(c, ""));
       $("#habeas").setAttribute("aria-invalid", "false");
-    } catch (err) {
+    } else {
+      const motivo = explicar(estado);
       aviso.className = "aviso mal";
-      aviso.textContent = "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.";
+      aviso.textContent = motivo.usuario +
+        " También puedes escribirnos al WhatsApp 315 552 68 66.";
       aviso.hidden = false;
-    } finally {
-      botonEnviar.disabled = false;
-      botonEnviar.textContent = textoBotonOriginal;
+      console.error("[CEFIT→n8n] " + motivo.consola + "\nURL usada: " + WEBHOOK_URL);
     }
+
+    botonEnviar.disabled = false;
+    botonEnviar.textContent = textoBotonOriginal;
   });
 })();
 </script>
 </body>
 </html>
+
