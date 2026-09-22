@@ -537,10 +537,15 @@ const crear = (tag, props = {}) => Object.assign(document.createElement(tag), pr
   visor.addEventListener("click", (ev) => { if (ev.target === visor) visor.close(); });
 })();
 
-/* ====== Formulario con validación ====== */
+/* ====== Formulario con validación y envío al Webhook de n8n ====== */
 (function formulario(){
   const form = $("#formulario");
   const aviso = $("#aviso");
+  const botonEnviar = form.querySelector('button[type="submit"]');
+  const textoBotonOriginal = botonEnviar.textContent;
+
+  // Reemplaza esta URL por la Production URL de tu nodo Webhook en n8n.
+  const WEBHOOK_URL = "https://elvis89.app.n8n.cloud/webhook/contacto-form";
 
   const REGLAS = {
     nombre: {
@@ -589,7 +594,7 @@ const crear = (tag, props = {}) => Object.assign(document.createElement(tag), pr
   };
   $("#habeas").addEventListener("change", revisarHabeas);
 
-  form.addEventListener("submit", (ev) => {
+  form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
     const camposOk = Object.keys(REGLAS).map(revisarCampo).every(Boolean);
     const habeasOk = revisarHabeas();
@@ -611,15 +616,33 @@ const crear = (tag, props = {}) => Object.assign(document.createElement(tag), pr
       autorizacion: { ley: "1581 de 2012", aceptada: true, fecha: new Date().toISOString() }
     };
 
-    // Demostración: aquí iría el envío al backend (fetch a la API de admisiones).
-    console.log("Solicitud lista para enviar:", datos);
+    botonEnviar.disabled = true;
+    botonEnviar.textContent = "Enviando...";
+    aviso.hidden = true;
 
-    aviso.className = "aviso ok";
-    aviso.textContent = "¡Listo, " + datos.nombre.split(" ")[0] + "! Registramos tu solicitud y un asesor te contactará al " + datos.telefono + ".";
-    aviso.hidden = false;
-    form.reset();
-    Object.keys(REGLAS).forEach(c => marcar(c, ""));
-    $("#habeas").setAttribute("aria-invalid", "false");
+    try {
+      const resp = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+      });
+
+      if (!resp.ok) throw new Error("Respuesta no válida del servidor (" + resp.status + ")");
+
+      aviso.className = "aviso ok";
+      aviso.textContent = "¡Listo, " + datos.nombre.split(" ")[0] + "! Registramos tu solicitud y un asesor te contactará al " + datos.telefono + ".";
+      aviso.hidden = false;
+      form.reset();
+      Object.keys(REGLAS).forEach(c => marcar(c, ""));
+      $("#habeas").setAttribute("aria-invalid", "false");
+    } catch (err) {
+      aviso.className = "aviso mal";
+      aviso.textContent = "No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.";
+      aviso.hidden = false;
+    } finally {
+      botonEnviar.disabled = false;
+      botonEnviar.textContent = textoBotonOriginal;
+    }
   });
 })();
 </script>
